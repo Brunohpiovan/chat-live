@@ -134,11 +134,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             stompClient.subscribe('/topic/messages', (message) => {
                 appendMessage(JSON.parse(message.body));
             });
-             stompClient.subscribe(`/user/${user.username}/queue/private`, (message) => {
-                 const msg = JSON.parse(message.body);
-                 console.log("inscricao " , msg);
-                 appendMessage(msg);
-             });
+            stompClient.subscribe(`/user/${user.username}/queue/private`, (message) => {
+                appendMessage(JSON.parse(message.body));
+            });
         },
         onWebSocketError: (error) => {
             console.error('Error with websocket', error);
@@ -161,12 +159,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
             profilePicture: user.profilePictureUrl,
             recipient: currentChatUser || null
         };
-        console.log("publicando ",message); // Verifique a mensagem no console
-      if (currentChatUser) {
+        if (currentChatUser) {
                  stompClient.publish({
                      destination: `/app/private/${currentChatUser}`,
                      body: JSON.stringify(message)
                  });
+                 appendMessage({
+                    ...message,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' 
+                        
+                    })
+                });
              } else {
 
                  stompClient.publish({
