@@ -1,3 +1,7 @@
+let currentChatUser = null;
+const user = JSON.parse(localStorage.getItem('user'));
+const currentUsername = user ? user.username : null;
+
 document.addEventListener('DOMContentLoaded', (event) => {
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -14,6 +18,37 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const emojiPicker = document.getElementById('emoji-picker');
 
 
+    userList.addEventListener('click', (event) => {
+        if (event.target.tagName === 'BUTTON') {
+            const username = event.target.previousSibling.textContent.trim();
+            startPrivateChat(username);
+        }
+    });
+    
+
+     function startPrivateChat(username) {
+        currentChatUser = username;
+        chatBox.innerHTML = '';
+        loadPrivateMessages(currentUsername,currentChatUser); 
+    
+        document.querySelector('.chat-column h1').innerText = `Conversando com ${currentChatUser}`;
+    }
+
+    async function loadPrivateMessages(sender,recipient) {
+        try {
+        const response = await fetch(`/api/messages/private/${sender}/${recipient}`);
+        console.log("response " , response);
+        if (!response.ok) {
+             throw new Error('Failed to fetch private messages: ' + response.statusText);
+         }
+         const messages = await response.json(); 
+         console.log(messages);
+         messages.forEach(appendMessage);
+         } catch (error) {
+        console.error('Erro ao buscar mensagens privadas:', error); }
+    }
+
+
     emojiButton.addEventListener('click', () => {
         emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
     });
@@ -26,7 +61,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     });
 
+  
+
     function appendMessage(message) {
+        if (message.recipient) {
+            // Exibir somente se a conversa atual corresponde ao destinatário/remetente
+            if (
+                (message.sender === currentUsername && message.recipient === currentChatUser) ||
+                (message.sender === currentChatUser && message.recipient === currentUsername)
+            ) {
+                displayMessage(message);
+            }
+        } else {
+            // Exibir mensagens públicas apenas na aba geral
+            if (!currentChatUser) {
+                displayMessage(message);
+            }
+        }
+    }
+
+    function displayMessage(message) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('mb-2');
         messageElement.innerHTML = `
@@ -58,7 +112,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const userItem = document.createElement('li'); 
                 userItem.classList.add('list-group-item');
                 userItem.classList.add('username-item');
-                userItem.innerText = user.username; 
+                userItem.innerHTML = `
+                ${user.username}
+                <button class="btn btn-primary btn-sm ml-2">Conversar</button>
+            `; 
                 
                 userList.appendChild(userItem); 
             }); 
@@ -77,6 +134,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             stompClient.subscribe('/topic/messages', (message) => {
                 appendMessage(JSON.parse(message.body));
             });
+             stompClient.subscribe(`/user/${user.username}/queue/private`, (message) => {
+                 const msg = JSON.parse(message.body);
+                 console.log("inscricao " , msg);
+                 appendMessage(msg);
+             });
         },
         onWebSocketError: (error) => {
             console.error('Error with websocket', error);
@@ -89,23 +151,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     stompClient.activate();
 
-    messageForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const messageContent = messageInput.value.trim();
-        if (messageContent && stompClient.connected) {
-            const message = {
-                sender: user.username,
-                text: messageContent,
-                profilePicture: user.profilePictureUrl
-            };
-            console.log(message);
-            stompClient.publish({
-                destination: '/app/send',
-                body: JSON.stringify(message)
-            });
-            messageInput.value = '';
-        }
-    });
+  messageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const messageContent = messageInput.value.trim();
+    if (messageContent && stompClient.connected) {
+        const message = {
+            sender: user.username,
+            text: messageContent,
+            profilePicture: user.profilePictureUrl,
+            recipient: currentChatUser || null
+        };
+        console.log("publicando ",message); // Verifique a mensagem no console
+      if (currentChatUser) {
+                 stompClient.publish({
+                     destination: `/app/private/${currentChatUser}`,
+                     body: JSON.stringify(message)
+                 });
+             } else {
+
+                 stompClient.publish({
+                     destination: '/app/send',
+                     body: JSON.stringify(message)
+                 });
+             }
+        messageInput.value = ''; // Limpar o campo de entrada de texto
+    }
+});
 
     loadUsers();
     loadMessages();

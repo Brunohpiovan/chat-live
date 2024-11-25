@@ -12,11 +12,21 @@ public class Message {
     private Long id;
 
     private String sender;
+    private String recipient;
     private String text;
     private String time;
     private String profilePicture;
 
     public Message() {
+    }
+
+    public Message(Long id, String sender, String recipient, String text, String time, String profilePicture) {
+        this.id = id;
+        this.sender = sender;
+        this.recipient = recipient;
+        this.text = text;
+        this.time = time;
+        this.profilePicture = profilePicture;
     }
 
     public Message(Long id, String sender, String text, String time, String profilePicture) {
@@ -33,6 +43,14 @@ public class Message {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
     public String getSender() {

@@ -1,4 +1,4 @@
-/* Reset */
+
 body, html {
     margin: 0;
     padding: 0;
@@ -15,18 +15,18 @@ body, html {
     padding-top: 50px;
     display: flex;
     width: 100%;
-    max-height: 100vh; /* Ajuste para controlar a altura */
-    max-width: 1200px; /* Limita a largura máxima */
+    max-height: 100vh; 
+    max-width: 1200px; 
 }
 
 /* Lista de Usuários */
 #user-list {
-    background-color: #202225; /* Cor de fundo mais escura para a lista de usuários */
+    background-color: #202225; 
     width: 250px;
     height: 100%;
     padding: 20px;
     overflow-y: auto;
-    border-right: 1px solid #444; /* Linha divisória */
+    border-right: 1px solid #444; 
 }
 
 #user-list h5 {
@@ -50,17 +50,17 @@ body, html {
 }
 
 #users li:hover {
-    background-color: #333; /* Destaque ao passar o mouse */
+    background-color: #333; 
 }
 
 #users li.active {
-    background-color: #3a3d41; /* Cor ativa */
+    background-color: #3a3d41; 
     color: #000000;
 }
-/* Estilo específico para os nomes de usuário */
+
 .username-item {
-    color: #000000; /* Altere para a cor que preferir */
-    font-weight: bold; /* Opcional: torna o texto mais destacado */
+    color: #000000; 
+    font-weight: bold; 
     padding: 8px 15px;
     margin-bottom: 5px;
     border-radius: 5px;
@@ -68,34 +68,34 @@ body, html {
     transition: background-color 0.3s;
 }
 
-/* Estilo para os itens de usuário quando o mouse passa em cima */
+
 .username-item:hover {
     background-color: #333;
-    color: #fff; /* Altere a cor para garantir boa visibilidade */
+    color: #fff; 
 }
 
 
-/* Coluna do Chat */
+
 .chat-column {
     flex-grow: 1;
     padding: 20px;
     width: 500px;
     height: 100%;
-    background-color: #36393f; /* Cor de fundo do chat */
+    background-color: #36393f;
     display: flex;
     flex-direction: column;
-    min-height: 500px; /* Altura mínima para a área de chat */
+    min-height: 500px; 
 }
 
-/* Título do Chat */
+
 h1 {
     font-size: 1.5rem;
-    color: #25d366;
+    color: #e7e8ee;
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Caixa de mensagens */
+
 .chat-box {
     flex-grow: 1;
     padding: 15px;
@@ -181,7 +181,7 @@ h1 {
 
 /* Botão de envio */
 .btn-primary {
-    background-color: #25d366;
+    background-color: #2752df;
     border: none;
     padding: 10px 20px;
     border-radius: 20px;
@@ -189,14 +189,14 @@ h1 {
 }
 
 .btn-primary:hover {
-    background-color: #22a354;
+    background-color: #082435;
 }
 
-/* Responsividade */
+
 @media (max-width: 768px) {
     .container-fluid {
         flex-direction: column;
-        height: 100%; /* Faz com que ocupe a tela inteira em dispositivos móveis */
+        height: 100%; 
     }
 
     #user-list {
@@ -206,7 +206,7 @@ h1 {
 
     .chat-column {
         height: auto;
-        min-height: 400px; /* Ajuste para um tamanho maior de tela */
+        min-height: 400px; 
     }
 
     .chat-box .message .message-content {
