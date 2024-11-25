@@ -1,0 +1,219 @@
+/* Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    background-color: #2f3136; 
+    color: #fff; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.container-fluid {
+    padding-top: 50px;
+    display: flex;
+    width: 100%;
+    max-height: 100vh; /* Ajuste para controlar a altura */
+    max-width: 1200px; /* Limita a largura máxima */
+}
+
+/* Lista de Usuários */
+#user-list {
+    background-color: #202225; /* Cor de fundo mais escura para a lista de usuários */
+    width: 250px;
+    height: 100%;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid #444; /* Linha divisória */
+}
+
+#user-list h5 {
+    font-size: 18px;
+    color: #99aab5;
+    margin-bottom: 15px;
+}
+
+#users {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#users li {
+    padding: 8px 15px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: #161616;
+}
+
+#users li:hover {
+    background-color: #333; /* Destaque ao passar o mouse */
+}
+
+#users li.active {
+    background-color: #3a3d41; /* Cor ativa */
+    color: #000000;
+}
+/* Estilo específico para os nomes de usuário */
+.username-item {
+    color: #000000; /* Altere para a cor que preferir */
+    font-weight: bold; /* Opcional: torna o texto mais destacado */
+    padding: 8px 15px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Estilo para os itens de usuário quando o mouse passa em cima */
+.username-item:hover {
+    background-color: #333;
+    color: #fff; /* Altere a cor para garantir boa visibilidade */
+}
+
+
+/* Coluna do Chat */
+.chat-column {
+    flex-grow: 1;
+    padding: 20px;
+    width: 500px;
+    height: 100%;
+    background-color: #36393f; /* Cor de fundo do chat */
+    display: flex;
+    flex-direction: column;
+    min-height: 500px; /* Altura mínima para a área de chat */
+}
+
+/* Título do Chat */
+h1 {
+    font-size: 1.5rem;
+    color: #25d366;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Caixa de mensagens */
+.chat-box {
+    flex-grow: 1;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #2f3136;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid #444;
+    min-height: 500px; /* Garantir que a área de mensagens ocupe mais espaço mesmo sem mensagens */
+}
+
+.chat-box .message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.chat-box .message img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.chat-box .message .message-content {
+    background-color: #43474f;
+    border-radius: 10px;
+    padding: 10px 15px;
+    max-width: 70%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chat-box .message .message-content .sender {
+    font-weight: bold;
+    color: #f3f3f3;
+    margin-bottom: 5px;
+}
+
+.chat-box .message .message-content .time {
+    font-size: 0.85rem;
+    color: #72767d;
+    text-align: right;
+}
+
+/* Formulário de envio de mensagem */
+#messageForm {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #444;
+    padding: 10px 0;
+    background-color: #2f3136;
+}
+
+.input-group {
+    flex-grow: 1;
+    display: flex;
+}
+
+.input-group .form-control {
+    border-radius: 20px;
+    border: 1px solid #444;
+    padding: 10px 15px;
+    background-color: #40444b;
+    color: #fff;
+}
+
+.input-group .input-group-append {
+    margin-left: 10px;
+}
+
+.emoji-button {
+    background-color: #2f3136;
+    color: #b9bbbe;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.emoji-button:hover {
+    color: #fff;
+}
+
+/* Botão de envio */
+.btn-primary {
+    background-color: #25d366;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #22a354;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container-fluid {
+        flex-direction: column;
+        height: 100%; /* Faz com que ocupe a tela inteira em dispositivos móveis */
+    }
+
+    #user-list {
+        width: 100%;
+        height: auto;
+    }
+
+    .chat-column {
+        height: auto;
+        min-height: 400px; /* Ajuste para um tamanho maior de tela */
+    }
+
+    .chat-box .message .message-content {
+        max-width: 100%;
+    }
+
+    .btn-primary {
+        padding: 8px 15px;
+    }
+}

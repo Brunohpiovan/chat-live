@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style-chat.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+</head>
+<body>
+<div class="container-fluid d-flex justify-content-center align-items-center">
+  <div class="row w-100">
+    <div class="col-md-3 users-column" id="user-list">
+      <h2>Usuários</h2>
+      <ul class="list-group" id="userList">
+        <!-- Lista de usuários será inserida aqui -->
+      </ul>
+    </div>
+    <div class="col-md-9 chat-column">
+      <h1 class="text-center">Chat</h1>
+      <div class="chat-box border rounded p-3 mb-3" id="chatBox"></div>
+      <form id="messageForm">
+        <div class="input-group">
+          <button type="button" class="btn btn-secondary emoji-button" id="emoji-button">😀</button>
+          <input type="text" class="form-control" id="message" placeholder="Digite sua mensagem" required>
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Enviar</button>
+          </div>
+        </div>
+      </form>
+      <emoji-picker id="emoji-picker" style="display: none;"></emoji-picker>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+<script type="module" src="/js/chat.js"></script>
+</body>
+</html>
