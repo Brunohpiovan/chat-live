@@ -42,11 +42,10 @@ public class MessageController {
         messagingTemplate.convertAndSendToUser(recipient, "/queue/private", message);
     }
 
-    @GetMapping("/api/messages/private/{currentUser}/{username}")
+    @GetMapping("/api/messages/private/{sender}/{recipient}")
     @ResponseBody
-    public List<Message> getPrivateMessages(@PathVariable String currentUser, @PathVariable String username) {
-        String senderUsername = currentUser;
-        return messageService.getPrivateMessages(senderUsername, username);
+    public List<Message> getPrivateMessages(@PathVariable String sender, @PathVariable String recipient) {
+        return messageService.getPrivateMessages(sender, recipient);
     }
 
     @GetMapping("/api/messages")

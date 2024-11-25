@@ -25,7 +25,7 @@ public class MessageService {
 
     public List<Message> getPrivateMessages(String senderUsername, String recipientUsername) {
         try {
-            return messageRepository.findBySenderAndRecipientOrRecipientAndSender(senderUsername, recipientUsername,recipientUsername, senderUsername);
+            return messageRepository.findConversationMessages(senderUsername, recipientUsername);
         } catch (Exception e) {
             System.err.println("Erro ao buscar mensagens privadas: " + e.getMessage());
             e.printStackTrace();
